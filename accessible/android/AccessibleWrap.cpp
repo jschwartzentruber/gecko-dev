@@ -4,6 +4,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #include "AccessibleWrap.h"
+#include "HyperTextAccessible-inl.h"
+// these are defined in unicode/umachine.h included by above, and will break
+// method names in JavaBuiltins.h if defined
+#undef TRUE
+#undef FALSE
 
 #include "Accessible-inl.h"
 #include "AccEvent.h"

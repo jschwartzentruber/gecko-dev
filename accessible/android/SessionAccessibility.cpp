@@ -14,6 +14,7 @@
 #include "nsAccessibilityService.h"
 #include "nsViewManager.h"
 #include "nsIPersistentProperties2.h"
+#include "Accessible-inl.h"
 
 #include "mozilla/PresShell.h"
 #include "mozilla/dom/BrowserParent.h"

@@ -582,6 +582,7 @@ bool CustomElf::Relocate() {
   DEBUG_LOG("Relocate %s @%p", GetPath(), static_cast<void*>(base));
   uint32_t symtab_index = (uint32_t)-1;
   void* symptr = nullptr;
+  size_t n_rels = 0;
   for (Array<Reloc>::iterator rel = relocations.begin();
        rel < relocations.end(); ++rel) {
     /* Location of the relocation */
@@ -599,11 +600,14 @@ bool CustomElf::Relocate() {
       const Sym sym = symtab[symtab_index];
       if (sym.st_shndx != SHN_UNDEF) {
         symptr = GetPtr(sym.st_value);
+        DEBUG_LOG("CustomElf::Relocate(%p [\"%s\"], \"%s\") = %p",
+            reinterpret_cast<const void*>(this), GetPath(), strtab.GetStringAt(sym.st_name), symptr);
       } else {
         /* TODO: handle symbol resolving to nullptr vs. being undefined. */
         symptr = GetSymbolPtrInDeps(strtab.GetStringAt(sym.st_name));
       }
     }
+    n_rels++;
 
     if (symptr == nullptr)
       WARN("%s: Relocation to NULL @0x%08" PRIxPTR, GetPath(),
@@ -625,6 +629,8 @@ bool CustomElf::Relocate() {
         return false;
     }
   }
+  ERROR("CustomElf::Relocate([\"%s\"]) did %zu relocations",
+      GetPath(), n_rels);
   return true;
 }
 

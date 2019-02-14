@@ -6,6 +6,7 @@
 #include "ProxyAccessibleWrap.h"
 
 #include "nsPersistentProperties.h"
+#include "Accessible-inl.h"
 
 #include "mozilla/a11y/DocAccessiblePlatformExtParent.h"
 
